@@ -13,3 +13,6 @@ class Board(Resource):
         return utils.getBoard([[None, 0, 1], [None, 0, 0], [None, None]])
 
 api.add_resource(Board, '/{}/board'.format(API_VERSION))
+
+if __name__ = "__main__":
+    app.run(host='0.0.0.0')
