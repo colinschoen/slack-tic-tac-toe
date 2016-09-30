@@ -10,7 +10,7 @@ api = Api(app)
 
 class Board(Resource):
     def get(self):
-        return utils.getBoard([[None, 0, 1], [None, 0, 0], [None, None]])
+        return utils.getBoard([[None, 0, 1], [None, 0, 0], [None, None, 1]])
 
 api.add_resource(Board, '/{}/board'.format(API_VERSION))
 
