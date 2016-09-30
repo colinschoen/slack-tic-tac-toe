@@ -4,6 +4,7 @@ import utils
 
 SLACK_TOKEN = ""
 API_VERSION = "v1"
+STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
 
 app = Flask(__name__)
 api = Api(app)

@@ -13,13 +13,7 @@ def getBoard(board):
     """
     assert type(board) is list, "The board must be a list"
 
-    return """
-        | {} | {} | {} |
-        |---+---+---|
-        | {} | {} | {} |
-        |---+---+---|
-        | {} | {} | {} |
-        """.format(
+    return "| {} | {} | {} |\n|---+---+---|\n| {} | {} | {} |\n|---+---+---|\n| {} | {} | {} |".format(
                 board[0][0],
                 board[0][1],
                 board[0][2],
@@ -29,5 +23,4 @@ def getBoard(board):
                 board[2][0],
                 board[2][1],
                 board[2][2])
-
 
