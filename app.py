@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
+from board import Board
 
 import utils
 
@@ -15,7 +16,8 @@ app.config['STARTING_BOARD'] = STARTING_BOARD
 
 class Hook(Resource):
     def post(self):
-        text = request.form['text'].split()
+        data = request.form
+        text = data['text'].split()
         if len(text) < 2:
             return """Please specify a command {} and argument/s."""\
                 .format(str(VALID_COMMANDS))
@@ -24,9 +26,11 @@ class Hook(Resource):
             return """{} is not a valid command. The valid commands are {}."""\
                 .format(str(VALID_COMMANDS))
         args = text[1:]
+        # Call our respective board command
+        response = getattr(Board, command)(data, args)
         return jsonify({
                     'response_type': 'in_channel',
-                    'text': text
+                    'text': response
                })
 
 def start_game(channel, player0, player1):
