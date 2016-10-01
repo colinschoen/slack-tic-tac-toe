@@ -14,12 +14,10 @@ app.config['STARTING_BOARD'] = STARTING_BOARD
 class Hook(Resource):
     def post(self):
         text = request.form['text']
-        return jsonify("""
-               {
+        return jsonify({
                     'response_type': 'in_channel'
-                    'text': {}
-               } 
-                """.format(text))
+                    'text': text
+               })
 
 def start_game(channel, player0, player1):
     """
@@ -36,7 +34,7 @@ def start_game(channel, player0, player1):
     pass
 
 
+api.add_resource(Hook, '/{}/hook'.format(app.config['API_VERSION']))
 
 if __name__ == "__main__":
-    api.add_resource(Hook, '/{}/hook'.format(API_VERSION))
     app.run(host='0.0.0.0')
