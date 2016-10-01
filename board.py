@@ -10,4 +10,4 @@ class Board:
 
     @staticmethod
     def board(payload, args):
-        return utils.getBoard(STARTING_BOARD)
+        return utils.getBoard(Board.STARTING_BOARD)
