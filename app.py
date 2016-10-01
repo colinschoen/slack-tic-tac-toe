@@ -15,7 +15,7 @@ class Hook(Resource):
     def post(self):
         text = request.form['text']
         return jsonify({
-                    'response_type': 'in_channel'
+                    'response_type': 'in_channel',
                     'text': text
                })
 
