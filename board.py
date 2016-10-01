@@ -1,5 +1,5 @@
 class Board:
     @staticmethod
-    def createBoard(payload, args):
+    def start(payload, args):
         return "Creating game..."
 
