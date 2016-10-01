@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
+
 import utils
 
 API_VERSION = 'v1'
 STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
+VALID_COMMANDS = ['start', 'board', 'move', 'pony']
 
 app = Flask(__name__)
 api = Api(app)
@@ -13,7 +15,14 @@ app.config['STARTING_BOARD'] = STARTING_BOARD
 
 class Hook(Resource):
     def post(self):
-        text = request.form['text']
+        text = request.form['text'].split()
+        if len(text) < 2:
+            return """Please specify a command {} and argument/s."""
+                .format(str(VALID_COMMANDS))
+        command = text[0] not in VALID_COMMANDS:
+            return """{} is not a valid command. The valid commands are {}."""
+                .format(str(VALID_COMMANDS))
+        args = text[1:]
         return jsonify({
                     'response_type': 'in_channel',
                     'text': text
