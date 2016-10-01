@@ -7,6 +7,10 @@ STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
 
 app = Flask(__name__)
 api = Api(app)
+app.config.from_pyfile('config.cfg')
+app.config['API_VERSION'] = API_VERSION
+app.config['STARTING_BOARD'] = STARTING_BOARD
+api.add_resource(Hook, '/{}/hook'.format(API_VERSION))
 
 class Hook(Resource):
     def post(self):
@@ -32,10 +36,6 @@ def start_game(channel, player0, player1):
     """
     pass
 
-api.add_resource(Hook, '/{}/hook'.format(app.config['API_VERSION']))
 
 if __name__ == "__main__":
-    app.config.from_pyfile('config.cfg')
-    app.config['API_VERSION'] = API_VERSION
-    app.config['STARTING_BOARD'] = STARTING_BOARD
     app.run(host='0.0.0.0')
