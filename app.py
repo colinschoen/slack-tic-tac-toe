@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 import utils
 
@@ -8,11 +8,26 @@ STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
 app = Flask(__name__)
 api = Api(app)
 
-class Board(Resource):
-    def get(self):
-        return utils.getBoard([[None, 0, 1], [None, 0, 0], [None, None, 0]])
+class Hook(Resource):
+    def post(self):
+        text = request.form['text']
+        return jsonify(text)
 
-api.add_resource(Board, '/{}/board'.format(app.config['API_VERSION']))
+def start_game(channel, player0, player1):
+    """
+    Starts a new game in channel if one does not exist already
+    
+    Args:
+        channel(str): The Slack CID to start the game in
+        player0(str): The Slack UID of the first player in the game
+        player1(str): The Slack UID of the second player in the game
+        
+    Returns:
+        None
+    """
+    pass
+
+api.add_resource(Hook, '/{}/hook'.format(app.config['API_VERSION']))
 
 if __name__ == "__main__":
     app.config.from_pyfile('config.cfg')
