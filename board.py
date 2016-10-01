@@ -1,3 +1,5 @@
 class Board:
-    def createBoard(self, ):
+    @staticmethod
+    def createBoard(payload, args):
+        return "Creating game..."
 
