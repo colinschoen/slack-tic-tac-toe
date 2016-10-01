@@ -17,10 +17,11 @@ class Hook(Resource):
     def post(self):
         text = request.form['text'].split()
         if len(text) < 2:
-            return """Please specify a command {} and argument/s."""
+            return """Please specify a command {} and argument/s."""\
                 .format(str(VALID_COMMANDS))
-        command = text[0] not in VALID_COMMANDS:
-            return """{} is not a valid command. The valid commands are {}."""
+        command = text[0] 
+        if command not in VALID_COMMANDS:
+            return """{} is not a valid command. The valid commands are {}."""\
                 .format(str(VALID_COMMANDS))
         args = text[1:]
         return jsonify({
