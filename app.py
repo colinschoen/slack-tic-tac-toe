@@ -18,8 +18,8 @@ class Hook(Resource):
     def post(self):
         data = request.form
         text = data['text'].split()
-        if len(text) < 2:
-            return """Please specify a command {} and argument/s."""\
+        if len(text) < 1:
+            return """Please specify a command {} and any argument/s."""\
                 .format(str(VALID_COMMANDS))
         command = text[0] 
         if command not in VALID_COMMANDS:
