@@ -11,7 +11,12 @@ api = Api(app)
 class Hook(Resource):
     def post(self):
         text = request.form['text']
-        return jsonify(text)
+        return jsonify("""
+               {
+                    'response_type': 'in_channel'
+                    'text': {}
+               } 
+                """.format(text))
 
 def start_game(channel, player0, player1):
     """
