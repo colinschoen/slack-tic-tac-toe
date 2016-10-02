@@ -17,6 +17,9 @@ app.config['STARTING_BOARD'] = STARTING_BOARD
 class Hook(Resource):
     def post(self):
         data = request.form
+        # Ensure our slack token is valid
+        if data["token"] != app.config['SLACK_TOKEN']:
+            return "Error: Invalid Slack API Token"
         text = data['text'].split()
         if len(text) < 1:
             return """Please specify a command {} and any argument/s."""\
