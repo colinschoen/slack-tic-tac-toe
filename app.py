@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request
-from flask_restful import Resource, Api
 from board import Board
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Resource, Api
 
 import utils
 
@@ -13,6 +14,13 @@ api = Api(app)
 app.config.from_pyfile('config.cfg')
 app.config['API_VERSION'] = API_VERSION
 app.config['STARTING_BOARD'] = STARTING_BOARD
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(
+        app.config['DB_USERNAME'],
+        app.config['DB_PASSWORD'],
+        app.config['DB_SERVER'],
+        app.config['DB_NAME'],
+        )
+db = SQLAlchemy(app)
 
 class Hook(Resource):
     def post(self):
