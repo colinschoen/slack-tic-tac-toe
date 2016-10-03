@@ -66,7 +66,7 @@ class Board(db.Model):
             lstState.append(row)
         return lstState
 
-    def isGameOver():
+    def isGameOver(self):
         state = self.decode_state(self.state):
         for row in state:
             player0_row_score = 0
