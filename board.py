@@ -31,6 +31,43 @@ class Board(db.Model):
 
 
     @staticmethod
+    def encode_state(state):
+        """
+        Encode a game state by flattening it to a string to be stored in the DB
+
+        args:
+            state(list) The state to encode
+        returns:
+            strState(str) A string representation of the state
+        """
+        strState = ""
+        for row in state:
+            for column in row:
+                strState += column if column is not None else " "
+
+    @staticmethod
+    def decode_state(state):
+        """
+        Decode the serialized game state by creating the list structure
+
+        args:
+            state(str) The serialized string state to decode
+        returns:
+            state(list) A list representation of the state
+        """
+        state = split('')
+        lstState = []
+        for _ in range(3):
+            row = []
+            for _ in range(3):
+                element = state[0] if state[0] !=  " " else None
+                row.append(state[0])
+                state = state[1:]
+            lstState.append(row)
+        return lstState
+
+        
+    @staticmethod
     def start(payload, args):
         """
         Starts a new game if one doesn't already exist in the channel
