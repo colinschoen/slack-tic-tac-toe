@@ -2,7 +2,7 @@ from app import db
 import time
 import utils
 
-class Board(db.model):
+class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     player0_id = db.Column(db.String(100))
     player1_id = db.Column(db.String(100))
