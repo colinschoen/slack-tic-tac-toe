@@ -22,7 +22,7 @@ class Board(db.Model):
         """
         self.player0_id = player0_id
         self.player1_id = player1_id
-        self.player1_nikcname = player1_nickname
+        self.player1_nickname = player1_nickname
         self.player_turn = player_turn
         if not player_turn:
             self.player_turn = player0_id
@@ -66,6 +66,31 @@ class Board(db.Model):
             lstState.append(row)
         return lstState
 
+    def isGameOver():
+        state = self.decode_state(self.state):
+        for row in state:
+            player0_row_score = 0
+            player1_row_score = 0
+            for element in row:
+                if element == x:
+                    player0_row_score += 1
+                elif element == 0:
+                    player1_row_score += 1
+            if player0_row_score == 3 or player1_row_score == 3:
+                return True
+        #TODO(@colinschoen) Check columns and diagonals
+                
+
+        
+    @staticmethod
+    def start(payload, args):
+        """
+        Starts a new game if one doesn't already exist in the channel
+
+        args:
+            for element in row:
+                
+
         
     @staticmethod
     def start(payload, args):
@@ -77,11 +102,22 @@ class Board(db.Model):
             args (list) - List containing arguments or flags passed after Sack
                  commands.
         """
+        # Does a game already exist in this channel?
+        channel_id = payload['channel_id']
+        board = Board.query.filter_by(channel_id=channel_id).first()
+        if board or board.isGameOver():
+            return "Error: An active game already exists in this channel"
         opponent = args[0]
         # There isn't a way to properly validate that a user with the handle
         #    exists, so just ensure the format is correct.
         if opponent[0] != '@':
             return 'Error: You must specify an opponent by their @handle'
+        board = Board(player0_id=payload['user_id'],
+                player1_nickname=opponent[1:],
+                player_turn=payload['user_id']
+                channel_id=payload['channel_id']
+                state=Board.encode_state(Board.STARTING_BOARD)
+                )
         channel_id, user_id = payload['channel_id'], payload['user_id']
         # TODO(@colinschoen) Does a game already exist in this channel
         #    sql('SELECT count(*) FROM GAMES WHERE channel_id=channel_id')
@@ -96,18 +132,16 @@ class Board(db.Model):
                  commands.
         """
         # Does a game exist?
-        # TODO(@colinschoen) Fetch from DB current game for this channel
-        exists = True
-        if not exist:
+        channel_id = payload['channel_id']
+        board = Board.query.filter_by(channel_id=channel_id).first()
+        if not board:
             return 'Error: No game exists in current channel. "Try /ttt start @opponent"'
         # Is it the "invoking" players turn?
-        # TODO(@colinschoen) Fetch from DB current players turn
-        turn = 0 
-        if payload['user_id'] != turn:
+        if board.player_turn != payload['user_id']:
             return "Error: It is your opponents turn."
         # TODO(@colinschoen) Update DB with this move
         # TODO(@colinschoen) Fetch current board from DB
-        return utils.getBoard([])
+        return utils.getBoard(Board.encode_state(board.state))
 
 
     @staticmethod
