@@ -67,7 +67,7 @@ class Board(db.Model):
         return lstState
 
     def isGameOver(self):
-        state = self.decode_state(self.state):
+        state = Board.decode_state(self.state):
         for row in state:
             player0_row_score = 0
             player1_row_score = 0
@@ -158,5 +158,5 @@ class Board(db.Model):
         board = Board.query.filter_by(channel_id=channel_id).first()
         if not board:
             return 'Error: No game exists in this channel'
-        state = Board.decode(board.state)
+        state = Board.decode_state(board.state)
         return utils.getBoard(state)
