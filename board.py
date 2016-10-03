@@ -111,5 +111,18 @@ class Board(db.Model):
 
 
     @staticmethod
-    def board(payload=None, args=None):
-        return utils.getBoard(Board.STARTING_BOARD)
+    def board(payload, args=None):
+        """
+        Fetches and outputs a pretty version of the current game state (board)
+
+        args:
+            payload (dict) - Dictionary containing POST payload from Slack.
+            args (list) - List containing arguments or flags passed after Sack
+                 commands.
+        """
+        channel_id = payload['channel_id']
+        board = Board.query.filter_by(channel_id=channel_id).first()
+        if not board:
+            return 'Error: No game exists in this channel'
+        state = Board.decode(board.state)
+        return utils.getBoard(state)
