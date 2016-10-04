@@ -146,6 +146,7 @@ class Board(db.Model):
         state = Board.decode_state(state)
         return utils.getBoard(state)
         
+    @staticmethod
     def move(payload, args):
         """
         Makes a move for a player if it is the players turn and a game exists.
