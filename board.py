@@ -102,13 +102,12 @@ class Board(db.Model):
 
         """
         return """
-        Available commands:\n\n
+        Available commands:
 
-        board - (E.g. /ttt board) Display the current board in the channel \n
-        move [row index] [col index] - (E.g. /ttt move 0 3) Make a move to the
-            0th row and 3rd column\n
-        start [user] - (E.g. /ttt start @colin) Start a game with opponent
-            @Colin
+
+        board - (E.g. /ttt board) Display the current board in the channel 
+        move [row index] [col index] - (E.g. /ttt move 0 3) Make a move to the 0th row and 3rd column
+        start [user] - (E.g. /ttt start @colin) Start a game with opponent @Colin
         """
 
     @staticmethod
