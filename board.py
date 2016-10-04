@@ -180,7 +180,7 @@ class Board(db.Model):
         if board.player_turn and board.player_turn != payload['user_id']:
             return "Error: It is your opponents turn."
         state = Board.decode_state(str(board.state))
-        state[arg[0]][arg[1]] = X if payload['user_id'] == str(board.player0_id) else O
+        state[arg[0]][arg[1]] = "X" if payload['user_id'] == str(board.player0_id) else "O"
         # Update our board
         board.state = state
         # Update our current players turn
