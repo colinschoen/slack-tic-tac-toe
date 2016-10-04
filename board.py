@@ -146,7 +146,7 @@ class Board(db.Model):
         state = Board.decode_state(state)
         return utils.getBoard(state)
         
-    def make_move(payload, args):
+    def move(payload, args):
         """
         Makes a move for a player if it is the players turn and a game exists.
 
@@ -155,17 +155,31 @@ class Board(db.Model):
             args (list) - List containing arguments or flags passed after Sack
                  commands.
         """
+        # Were the proper arguments passed?
+        if len(args) < 2:
+            return 'Error: You must specific a position to make your move (E.g. /ttt move 0 3)'
+        if not all([type(arg) is int and arg <= 3 and arg >= 0 for arg in args]):
+            return 'Error: Invalid row or column specified'
         # Does a game exist?
         channel_id = payload['channel_id']
         board = Board.query.filter_by(channel_id=channel_id).first()
         if not board:
             return 'Error: No game exists in current channel. "Try /ttt start @opponent"'
+        # Do we need to log this as player 1
+        if not str(board.player1_id) and str(board.player1_nickname) == payload['user_name']:
+            board.player1_id = payload['user_id']
+            db.session.commit()
+        # Is this user even a player involved in the game?
+        if payload['user_id'] != str(board.player0_id) and payload['user_id'] != str(board.player1_id):
+            return 'Error: You are not a player in this game'
         # Is it the "invoking" players turn?
         if board.player_turn != payload['user_id']:
             return "Error: It is your opponents turn."
-        # TODO(@colinschoen) Update DB with this move
-        # TODO(@colinschoen) Fetch current board from DB
-        return utils.getBoard(Board.encode_state(board.state))
+        state = Board.decode_state(str(board.state))
+        state[arg[0]][arg[1]] = X if payload['user_id'] == str(board.player0_id) else O
+        board.state = state
+        db.session.commit()
+        return utils.getBoard(Board.encode_state(state))
 
 
     @staticmethod
