@@ -173,11 +173,14 @@ class Board(db.Model):
         if payload['user_id'] != str(board.player0_id) and payload['user_id'] != str(board.player1_id):
             return 'Error: You are not a player in this game'
         # Is it the "invoking" players turn?
-        if board.player_turn != payload['user_id']:
+        if board.player_turn and board.player_turn != payload['user_id']:
             return "Error: It is your opponents turn."
         state = Board.decode_state(str(board.state))
         state[arg[0]][arg[1]] = X if payload['user_id'] == str(board.player0_id) else O
+        # Update our board
         board.state = state
+        # Update our current players turn
+        board.player_turn = str(board.player0_id) if payload['user_id'] != str(board.player0_id) else str(board.player1_id)
         db.session.commit()
         return utils.getBoard(Board.encode_state(state))
 
