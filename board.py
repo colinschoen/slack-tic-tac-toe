@@ -161,5 +161,5 @@ class Board(db.Model):
         board = Board.query.filter_by(channel_id=channel_id).first()
         if not board:
             return 'Error: No game exists in this channel'
-        state = Board.decode_state(board.state)
+        state = Board.decode_state(str(board.state))
         return utils.getBoard(state)
