@@ -55,7 +55,9 @@ class Board(db.Model):
         returns:
             state(list) A list representation of the state
         """
-        state = split('')
+        assert type(state) is str, "state must be a string"
+
+        state = state.split('')
         lstState = []
         for _ in range(3):
             row = []
