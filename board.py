@@ -180,7 +180,7 @@ class Board(db.Model):
         if payload['user_id'] != str(board.player0_id) and payload['user_id'] != str(board.player1_id):
             return 'Error: You are not a player in this game'
         # Is it the "invoking" players turn?
-        if board.player_turn != payload['user_id'] and str(board.player0_id) == payload['user_id']:
+        if board.player_turn != payload['user_id'] and str(board.player0_id) == payload['user_id'] or (str(board.player1_id) == payload['user_id'] and board.player_turn and board.player_turn != payload['user_id']):
             return "Error: It is your opponents turn."
         state = Board.decode_state(str(board.state))
         row, col = args[0], args[1]
