@@ -122,7 +122,7 @@ class Board(db.Model):
                 )
         db.session.add(board)
         db.session.commit()
-        state = Board.decode_state(board.state)
+        state = Board.decode_state(state)
         return utils.getBoard(state)
         
     def make_move(payload, args):
