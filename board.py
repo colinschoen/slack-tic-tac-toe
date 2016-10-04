@@ -82,8 +82,10 @@ class Board(db.Model):
         """
         #TODO(@colinschoen) Make this actually legible and more efficient
         #   Perhaps use magic square
-        state = decode_state(self.state)
-        for row in state:
+        state = str(self.state)
+        if " " not in state:
+            return True
+        for row in decode_state(state):
             player0_row_score = 0
             player1_row_score = 0
             for element in row:
