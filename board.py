@@ -112,11 +112,13 @@ class Board(db.Model):
         #    exists, so just ensure the format is correct.
         if opponent[0] != '@':
             return 'Error: You must specify an opponent by their @handle'
+        state = Board.encode_state(Board.STARTING_BOARD)
+        print("state =", state)
         board = Board(player0_id=payload['user_id'],
                 player1_nickname=opponent[1:],
                 player_turn=payload['user_id'],
                 channel_id=payload['channel_id'],
-                state=Board.encode_state(Board.STARTING_BOARD)
+                state=state
                 )
         db.session.add(board)
         db.session.commit()
