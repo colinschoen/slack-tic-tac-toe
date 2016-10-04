@@ -184,7 +184,7 @@ class Board(db.Model):
             return "Error: It is your opponents turn."
         state = Board.decode_state(str(board.state))
         row, col = args[0], args[1]
-        if state[row][col]:
+        if state[row][col] == "O" or state[row][col] == "X":
             return "Error: You can't move here."
         state[row][col] = "X" if payload['user_id'] == str(board.player0_id) else "O"
         # Update our board
