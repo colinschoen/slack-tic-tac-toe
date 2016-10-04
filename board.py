@@ -78,6 +78,7 @@ class Board(db.Model):
                     player1_row_score += 1
             if player0_row_score == 3 or player1_row_score == 3:
                 return True
+        return False
         #TODO(@colinschoen) Check columns and diagonals
                 
 
@@ -95,7 +96,7 @@ class Board(db.Model):
         # Does a game already exist in this channel?
         channel_id = payload['channel_id']
         board = Board.query.filter_by(channel_id=channel_id).first()
-        if board or board.isGameOver():
+        if board and not board.isGameOver():
             return "Error: An active game already exists in this channel"
         opponent = args[0]
         # There isn't a way to properly validate that a user with the handle
