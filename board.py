@@ -190,7 +190,7 @@ class Board(db.Model):
         # Update our board
         board.state = Board.encode_state(state)
         # Update our current players turn
-        board.player_turn = str(board.player0_id) if payload['user_id'] != str(board.player0_id) else str(board.player1_id)
+        board.player_turn = board.player0_id if payload['user_id'] != str(board.player0_id) else board.player1_id
         db.session.commit()
         return utils.getBoard(state)
 
