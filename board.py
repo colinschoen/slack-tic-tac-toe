@@ -170,7 +170,7 @@ class Board(db.Model):
         if not board:
             return 'Error: No game exists in current channel. "Try /ttt start @opponent"'
         # Do we need to log this as player 1
-        if not str(board.player1_id) and str(board.player1_nickname) == payload['user_name']:
+        if not str(board.player1_id) and str(board.player1_nickname) == payload['user_name'].lower():
             board.player1_id = payload['user_id']
             db.session.commit()
         # Is this user even a player involved in the game?
