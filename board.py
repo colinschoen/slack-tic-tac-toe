@@ -159,7 +159,10 @@ class Board(db.Model):
         # Were the proper arguments passed?
         if len(args) < 2:
             return 'Error: You must specific a position to make your move (E.g. /ttt move 0 3)'
-        if not all([type(arg) is int and arg <= 3 and arg >= 0 for arg in args]):
+        # Make our arguments ints
+        args = [int(arg) for arg in args]
+        # Do we have valid arguments?
+        if not all([arg <= 2 and arg >= 0 for arg in args]):
             return 'Error: Invalid row or column specified'
         # Does a game exist?
         channel_id = payload['channel_id']
