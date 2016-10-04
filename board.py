@@ -182,11 +182,11 @@ class Board(db.Model):
         state = Board.decode_state(str(board.state))
         state[args[0]][args[1]] = "X" if payload['user_id'] == str(board.player0_id) else "O"
         # Update our board
-        board.state = state
+        board.state = Board.encode_state(state)
         # Update our current players turn
         board.player_turn = str(board.player0_id) if payload['user_id'] != str(board.player0_id) else str(board.player1_id)
         db.session.commit()
-        return utils.getBoard(Board.encode_state(state))
+        return utils.getBoard(state)
 
 
     @staticmethod
