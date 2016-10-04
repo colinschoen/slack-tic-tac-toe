@@ -89,9 +89,9 @@ class Board(db.Model):
             player0_row_score = 0
             player1_row_score = 0
             for element in row:
-                if element == x:
+                if element == "X":
                     player0_row_score += 1
-                elif element == 0:
+                elif element == "O":
                     player1_row_score += 1
             if player0_row_score == 3 or player1_row_score == 3:
                 return True
