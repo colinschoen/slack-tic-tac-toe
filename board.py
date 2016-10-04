@@ -89,6 +89,29 @@ class Board(db.Model):
 
         
     @staticmethod
+    def help(payload=None, args=None):
+        """
+        Prints a help message detailing the commands for the user
+
+        args:
+            payload (dict) - Dictionary containing POST payload from Slack.
+            args (list) - List containing arguments or flags passed after Sack
+                 commands.
+        returns:
+            help (str) - A "helpful" help string
+
+        """
+        return """
+        Available commands:\n\n
+
+        board - (E.g. /ttt board) Display the current board in the channel \n
+        move [row index] [col index] - (E.g. /ttt move 0 3) Make a move to the
+            0th row and 3rd column\n
+        start [user] - (E.g. /ttt start @colin) Start a game with opponent
+            @Colin
+        """
+
+    @staticmethod
     def start(payload, args):
         """
         Starts a new game if one doesn't already exist in the channel
@@ -113,7 +136,6 @@ class Board(db.Model):
         if opponent[0] != '@':
             return 'Error: You must specify an opponent by their @handle'
         state = Board.encode_state(Board.STARTING_BOARD)
-        print("state =", state)
         board = Board(player0_id=payload['user_id'],
                 player1_nickname=opponent[1:],
                 player_turn=payload['user_id'],
