@@ -36,7 +36,7 @@ class Hook(Resource):
         command = text[0] 
         if command not in VALID_COMMANDS:
             return """{} is not a valid command. The valid commands are {}."""\
-                .format(str(VALID_COMMANDS))
+                .format(command, str(VALID_COMMANDS))
         args = text[1:]
         # Call our respective board command
         response = getattr(Board, command)(data, args)
