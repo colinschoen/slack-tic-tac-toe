@@ -6,7 +6,7 @@ import utils
 
 API_VERSION = 'v1'
 STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
-VALID_COMMANDS = ['start', 'board', 'move', 'pony']
+VALID_COMMANDS = ['start', 'board', 'move', 'help', 'pony']
 
 app = Flask(__name__)
 api = Api(app)
