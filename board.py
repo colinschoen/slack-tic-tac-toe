@@ -97,8 +97,10 @@ class Board(db.Model):
         channel_id = payload['channel_id']
         board = Board.query.filter_by(channel_id=channel_id).first()
         if board and not board.isGameOver():
-            return "Error: An active game already exists in this channel"
+            return "Error: An active game already exists in this channel."
         opponent = args[0]
+        if opponent[1:].lower() == payload['user_name'].lower():
+            return "Error: You can't challenge yourself."
         # There isn't a way to properly validate that a user with the handle
         #    exists, so just ensure the format is correct.
         if opponent[0] != '@':
@@ -109,9 +111,10 @@ class Board(db.Model):
                 channel_id=payload['channel_id'],
                 state=Board.encode_state(Board.STARTING_BOARD)
                 )
-        channel_id, user_id = payload['channel_id'], payload['user_id']
-        # TODO(@colinschoen) Does a game already exist in this channel
-        #    sql('SELECT count(*) FROM GAMES WHERE channel_id=channel_id')
+        db.session.add(board)
+        db.session.commit()
+        state = Board.decode_state(board.state)
+        return utils.getBoard(state)
         
     def make_move(payload, args):
         """
