@@ -1,4 +1,5 @@
 from app import db
+import numpy as np
 import time
 import utils
 
@@ -72,6 +73,16 @@ class Board(db.Model):
         return lstState
 
     def isGameOver(self):
+        """ 
+        Returns true or false depending on if the game is over
+        
+        Warning -- This is really messy and can be greatly improved.
+        
+        returns:
+            over(bool) - True if game is over False otherwise
+        """
+        #TODO(@colinschoen) Make this actually legible and more efficient
+        #   Perhaps use magic square
         state = decode_state(self.state)
         for row in state:
             player0_row_score = 0
@@ -83,10 +94,14 @@ class Board(db.Model):
                     player1_row_score += 1
             if player0_row_score == 3 or player1_row_score == 3:
                 return True
-        return False
-        #TODO(@colinschoen) Check columns and diagonals
-                
-
+        # Check diagonals
+        d1 = [state[0][0], state[1][1], state[2][2]] 
+        d2 = [state[2][0], state[1][1], state[0, 2]]
+        if d1 == ["X", "X", "X"] or  d1 == ["O", "O", "O"] or d2 == ["X", "X", "X"] or d2 ==["O", "O", "O"]:
+            return True
+        # Finally check the columns
+        transpose = list(zip(*state))
+        return any([c == ("O", "O", "O") or c == ("X", "X", "X") for c in transpose])
         
     @staticmethod
     def help(payload=None, args=None):
@@ -170,9 +185,6 @@ class Board(db.Model):
         if not board:
             return 'Error: No game exists in current channel. "Try /ttt start @opponent"'
         # Do we need to log this as player 1
-        print("board.player1_id =", board.player1_id)
-        print("board.player1_nickname =", board.player1_nickname)
-        print("payload['user_name'] =", payload['user_name'])
         if not board.player1_id and str(board.player1_nickname) == payload['user_name'].lower():
             board.player1_id = payload['user_id']
             db.session.commit()
