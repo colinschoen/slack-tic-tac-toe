@@ -85,7 +85,8 @@ class Board(db.Model):
         state = str(self.state)
         if " " not in state:
             return True
-        for row in self.decode_state(state):
+        state = self.decode_state(state)
+        for row in state:
             player0_row_score = 0
             player1_row_score = 0
             for element in row:
