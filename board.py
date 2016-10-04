@@ -104,8 +104,8 @@ class Board(db.Model):
             return 'Error: You must specify an opponent by their @handle'
         board = Board(player0_id=payload['user_id'],
                 player1_nickname=opponent[1:],
-                player_turn=payload['user_id']
-                channel_id=payload['channel_id']
+                player_turn=payload['user_id'],
+                channel_id=payload['channel_id'],
                 state=Board.encode_state(Board.STARTING_BOARD)
                 )
         channel_id, user_id = payload['channel_id'], payload['user_id']
