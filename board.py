@@ -93,6 +93,8 @@ class Board(db.Model):
             args (list) - List containing arguments or flags passed after Sack
                  commands.
         """
+        if len(args) < 1:
+            return "Error: You must specify an opponent"
         # Does a game already exist in this channel?
         channel_id = payload['channel_id']
         board = Board.query.filter_by(channel_id=channel_id).first()
