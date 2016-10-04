@@ -205,6 +205,11 @@ class Board(db.Model):
         # Update our current players turn
         board.player_turn = board.player0_id if payload['user_id'] != str(board.player0_id) else board.player1_id
         db.session.commit()
+        if board.isGameOver():
+            # Delete the board
+            db.session.delete(board)
+            db.session.commit()
+            return utils.getBoard(state) + "\n Game is over!"
         return utils.getBoard(state)
 
 
