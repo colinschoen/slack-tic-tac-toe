@@ -98,7 +98,7 @@ class Board(db.Model):
                 return True
         # Check diagonals
         d1 = [state[0][0], state[1][1], state[2][2]] 
-        d2 = [state[2][0], state[1][1], state[0, 2]]
+        d2 = [state[2][0], state[1][1], state[0][2]]
         if d1 == ["X", "X", "X"] or  d1 == ["O", "O", "O"] or d2 == ["X", "X", "X"] or d2 ==["O", "O", "O"]:
             return True
         # Finally check the columns
