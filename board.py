@@ -60,7 +60,7 @@ class Board(db.Model):
         """
         assert type(state) is str, "state must be a string"
 
-        state = state.split('')
+        state = list(state)
         lstState = []
         for _ in range(3):
             row = []
