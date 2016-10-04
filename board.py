@@ -88,16 +88,6 @@ class Board(db.Model):
         Starts a new game if one doesn't already exist in the channel
 
         args:
-            for element in row:
-                
-
-        
-    @staticmethod
-    def start(payload, args):
-        """
-        Starts a new game if one doesn't already exist in the channel
-
-        args:
             payload (dict) - Dictionary containing POST payload from Slack.
             args (list) - List containing arguments or flags passed after Sack
                  commands.
