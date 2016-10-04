@@ -28,6 +28,8 @@ class Board(db.Model):
             self.player_turn = player0_id
         self.channel_id = channel_id
         self.state = state
+        self.updated_at = updated_at
+        self.created_at = created_at
 
 
     @staticmethod
@@ -44,6 +46,7 @@ class Board(db.Model):
         for row in state:
             for column in row:
                 strState += column if column is not None else " "
+        return strState
 
     @staticmethod
     def decode_state(state):
