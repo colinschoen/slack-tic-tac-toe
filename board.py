@@ -173,7 +173,7 @@ class Board(db.Model):
         print("board.player1_id =", board.player1_id)
         print("board.player1_nickname =", board.player1_nickname)
         print("payload['user_name'] =", payload['user_name'])
-        if not str(board.player1_id) and str(board.player1_nickname) == payload['user_name'].lower():
+        if not board.player1_id and str(board.player1_nickname) == payload['user_name'].lower():
             board.player1_id = payload['user_id']
             db.session.commit()
         # Is this user even a player involved in the game?
