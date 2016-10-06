@@ -172,7 +172,7 @@ class Board(db.Model):
         db.session.add(board)
         db.session.commit()
         state = Board.decode_state(state)
-        return utils.getBoard(state)
+        return "{}\{}".format(utils.getBoard(state), utils.getCurrentPlayer(board))
         
     @staticmethod
     def move(payload, args):

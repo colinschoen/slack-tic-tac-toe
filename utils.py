@@ -10,7 +10,7 @@ def getCurrentTurn(board):
         str: The current players turn in a nice pretty string.
     """
     current_turn = board.player_turn
-    if current_turn == player0_id:
+    if current_turn == board.player0_id:
         player_name = board.player0_nickname
     else:
         player_name = board.player1_nickname
