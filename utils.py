@@ -10,6 +10,11 @@ def getBoard(board):
 
     Returns:
         str: The current ASCII representation of the board.
+
+    >>> getBoard([["X", "O", "X"], ["X", "X", "X"], ["O", "X", "X"]])
+    '|X|O|X|\\n|X|X|X|\\n|O|X|X|'
+    >>> getBoard([[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]])
+    '| | | |\\n| | | |\\n| | | |'
     """
     assert type(board) is list, "The board must be a list"
 

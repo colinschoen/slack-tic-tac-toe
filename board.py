@@ -41,6 +41,11 @@ class Board(db.Model):
             state(list) The state to encode
         returns:
             strState(str) A string representation of the state
+
+        >>> encode_state([["X", "O", "X"], ["X", "O", "X"], ["X", "O", "X"]])
+        >>> 'XOXXOXXOX'
+        >>> encode_state([[None, "O", "X"], ["X", None, "X"], ["X", "O", "X"]])
+        >>> ' OXX XXOX'
         """
         strState = ""
         for row in state:
@@ -57,6 +62,12 @@ class Board(db.Model):
             state(str) The serialized string state to decode
         returns:
             state(list) A list representation of the state
+
+        >>> decode_state("XOXOXOXOX")
+        [["X", "O", "X"], ["X", "O", "X"], ["X", "O", "X"]]
+
+        >>> decode_state(" O OXOXOX")
+        [[None, "O", None], ["X", "O", "X"], ["X", "O", "X"]]
         """
         assert type(state) is str, "state must be a string"
 
