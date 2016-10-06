@@ -2,6 +2,22 @@ HORIZONAL_BORDER = "-"
 CORNER_BORDER = "+"
 VERTICAL_BORDER = "|"
 
+def getCurrentTurn(board):
+    """Returns a pretty message reminding players whose turn it is
+    Args:
+        board (Board): The current board object
+    Returns:
+        str: The current players turn in a nice pretty string.
+    """
+    current_turn = board.player_turn
+    if current_turn == player0_id:
+        player_name = board.player0_nickname
+    else:
+        player_name = board.player1_nickname
+    return "It is {}'s turn.".format(player_name)
+
+
+
 def getBoard(board):
     """ Returns a pretty ASCII tic tac toe board.
     

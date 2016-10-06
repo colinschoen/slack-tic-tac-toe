@@ -222,7 +222,7 @@ class Board(db.Model):
             db.session.delete(board)
             db.session.commit()
             return utils.getBoard(state) + "\n Game is over!"
-        return utils.getBoard(state)
+        return "{}\n{}".format(utils.getBoard(state), utils.getCurrentTurn(board))
 
 
     @staticmethod
@@ -240,4 +240,4 @@ class Board(db.Model):
         if not board:
             return 'Error: No game exists in this channel'
         state = Board.decode_state(str(board.state))
-        return utils.getBoard(state)
+        return "{}\n{}".format(utils.getBoard(state), utils.getCurrentTurn(board))
