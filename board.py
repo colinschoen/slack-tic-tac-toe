@@ -6,6 +6,7 @@ class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     player0_id = db.Column(db.String(100))
     player1_id = db.Column(db.String(100))
+    player0_nickname = db.Column(db.String(40))
     player1_nickname = db.Column(db.String(40))
     player_turn = db.Column(db.String(100))
     channel_id = db.Column(db.String(100))
@@ -15,13 +16,14 @@ class Board(db.Model):
     STARTING_BOARD = [[None, None, None], [None, None, None], [None, None, None]]
 
     def __init__(self, player0_id=None, player1_id=None, player1_nickname=None,
-            player_turn=None, channel_id=None, state=None,
+            player0_nickname=None, player_turn=None, channel_id=None, state=None,
             updated_at=time.ctime(), created_at=time.ctime()):
         """
         Creates a new board
         """
         self.player0_id = player0_id
         self.player1_id = player1_id
+        self.player0_nickname = player0_nickname
         self.player1_nickname = player1_nickname
         self.player_turn = player_turn
         if not player_turn:
@@ -164,6 +166,7 @@ class Board(db.Model):
             return 'Error: You must specify an opponent by their @handle'
         state = Board.encode_state(Board.STARTING_BOARD)
         board = Board(player0_id=payload['user_id'],
+                player0_nickname=payload['user_name'],
                 player1_nickname=opponent[1:],
                 player_turn=payload['user_id'],
                 channel_id=payload['channel_id'],
